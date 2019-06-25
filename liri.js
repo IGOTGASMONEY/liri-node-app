@@ -1,32 +1,49 @@
 require("dotenv").config();
+var axios = require("axios")
 var keys = require("./keys.js");
+var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
-var artist= process.argv.slice[2].join("+");
-var queryUrl = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+var queryUrl = "https://rest.bandsintown.com/artists/" + search + "/events?app_id=codingbootcamp";
+
+
+var command = process.argv[2]; 
+var search = process.argv.slice(3).join("+");
+
+console.log(process.argv[3])
+console.log(search)
+console.log(command)
+
+function concertThis(uInput) {
+    axios.get("https://rest.bandsintown.com/artists/" + uInput + "/events?app_id=codingbootcamp").then(
+        function(response) {
+            // Then we print out the artist information
+            console.log(response.data[0]);
+            
+        }
+    
+);
+
+    }
+
+function switchCase(op, ui) {
+switch(op) {
+    case "concert-this":
+        concertThis(ui);
+        break;
+    case "movie-this":
+        movieThis(ui);
+        break
+        case "spotify-this-song":
+            spotifyThis(ui);
+            break
+            case "do-what-it-says":
+                doIt(ui);
+                break
+            
+};
+}
+
+switchCase(command, search)
 
 
 
-// * Title of the movie.
-// * Year the movie came out.
-// * IMDB Rating of the movie.
-// * Rotten Tomatoes Rating of the movie.
-// * Country where the movie was produced.
-// * Language of the movie.
-// * Plot of the movie.
-// * Actors in the movie.
-
-
-  // concert-this, "node liri.js concert-this <artist/band name here>"
-​
-  // spotify-this-song, "node liri.js spotify-this-song <song name here>"
-    // if no song is provided, default to "The Sign" -- HINT: use a SWITCH case statement
-​
-  // movie-this, "node liri.js movie-this <movie name here>"
-    // if user doesn't type a movie in, default output data for the movie "Mr. Nobody"
-    // HINT: use axios package to retrieve data from the OMDB API
-​
-  // do-what-it-says, "node liri.js do-what-it-says"
-    // this command should run spotify-this-song for "I Want it That Way" in random.txt  
-    // HINT: use the fs Node package to take in text inside of random.txt file
-
-api key spotify : eb247d755dcc4ea28b19ac24af53cdcd

@@ -3,7 +3,8 @@ var axios = require("axios")
 var keys = require("./keys.js");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
-var queryUrl = "https://rest.bandsintown.com/artists/" + search + "/events?app_id=codingbootcamp";
+// var queryUrl = "https://rest.bandsintown.com/artists/" + search + "/events?app_id=codingbootcamp";
+// const OmdbApi = require('omdb-api-pt')
 
 
 var command = process.argv[2];
@@ -26,6 +27,14 @@ function concertThis(uInput) {
 }
 
 function movieThis(uInput) {
+    omdb.bySearch({
+        search: '',
+        type: 'series',
+        year: '2004',
+        page: 1
+      }).then(res => console.log(res))
+        .catch(err => console.error(err))
+    key d5f8b492
 
 }
 
@@ -45,58 +54,50 @@ function movieThis(uInput) {
 
 
 function spotifyThis(uInput) {
-    var queryUrl = "https://api.spotify.com/v1/search?q=" + uInput + "&type=track&market=us&limit=10&offset=5";
-    
-    spotify.get("https://api.spotify.com/v1/search?q=" + uInput + "&type=track&market=us&limit=10&offset=5").then( function(error , response)
-    
-    {
-        if (uInput === error) {
-            spotify.get("https://api.spotify.com/v1/search?q=The%20Sign&type=track&market=US&limit=3&offset=5");
-            console.log("Artist(s): " + response.tracks.items[0].artists[0]);
-            console.log("Song:" + response.tracks.items.artists.name);
-            console.log("URL:" + response.track.items.artist.href);
+    console.log("line 51 before if:", uInput);
+    if (uInput=== "") {
+        uInput = "The Sign +Ace of Base" ;
+        
+    }
+    console.log("line 56 after if:", uInput);
+    spotify.search({
+        type: 'track',
+        query: uInput
+    }, function (error, response) {
+        if (error) {
+            console.log('Error occurred: ' + error);
+        }else{
+            // console.log(data);
+            console.log("Artist(s): " + response.tracks.items[0].artists[0].name);
+            console.log("Song:" + response.tracks.items[0].name);
+            console.log("URL:" + response.tracks.items[0].external_urls.spotify);
+            console.log("Album:" + response.tracks.items[0].album.name);
             
-    
-        } else {
-
-            console.log("Artist(s): " + response.tracks.items[0].artists[0]);
-            console.log("Song:" + response.tracks.items.artists.name);
-            console.log("URL:" + response.track.items.artist.href);
-            console.log("Album:" + response.track.items.album.name);
         }
-
-
-
-
-    })
-
-  
-
-
-   
-
+        
+    });
+    
 }
+    
 
 
+        function switchCase(op, ui) {
+            switch (op) {
+                case "concert-this":
+                    concertThis(ui);
+                    break;
+                case "movie-this":
+                    movieThis(ui);
+                    break;
+                case "spotify-this-song":
+                        spotifyThis(ui);
+                    break
+                case "do-what-it-says":
+                    doIt(ui);
+                    break
+            };
 
 
+        };
 
-function switchCase(op, ui) {
-    switch (op) {
-        case "concert-this":
-            concertThis(ui);
-            break;
-        case "movie-this":
-            movieThis(ui);
-            break
-        case "spotify-this-song":
-            spotifyThis(ui);
-            break
-        case "do-what-it-says":
-            doIt(ui);
-            break
-
-    };
-}
-
-switchCase(command, search)
+        switchCase(command, search)

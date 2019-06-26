@@ -3,8 +3,11 @@ var axios = require("axios")
 var keys = require("./keys.js");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
-// var queryUrl = "https://rest.bandsintown.com/artists/" + search + "/events?app_id=codingbootcamp";
-// const OmdbApi = require('omdb-api-pt')
+// import
+var APIClinet = require('omdb-api-client');
+
+// instantiate
+var omdb = new APIClinet();
 
 
 var command = process.argv[2];
@@ -27,14 +30,27 @@ function concertThis(uInput) {
 }
 
 function movieThis(uInput) {
-    omdb.bySearch({
-        search: '',
-        type: 'series',
-        year: '2004',
-        page: 1
-      }).then(res => console.log(res))
-        .catch(err => console.error(err))
-    key d5f8b492
+
+    axios.get("http://www.omdbapi.com/?apikey=d5f8b492&t=" +uInput).then(function (response) {
+    console.log(response.data.Title);
+    console.log(response.data.Year);
+    console.log(response.data.imdbRating);
+    console.log(response.data.imdbVotes);
+    console.log(response.data.Ratings)
+    console.log(response.data.Country);
+    console.log(response.data.Language);
+    console.log(response.data.Plot);
+
+    // * Title of the movie.
+    // * Year the movie came out.
+    // * IMDB Rating of the movie.
+    // * Rotten Tomatoes Rating of the movie.
+    // * Country where the movie was produced.
+    // * Language of the movie.
+    // * Plot of the movie.
+    // * Actors in the movie.
+    })
+
 
 }
 
@@ -55,9 +71,9 @@ function movieThis(uInput) {
 
 function spotifyThis(uInput) {
     console.log("line 51 before if:", uInput);
-    if (uInput=== "") {
-        uInput = "The Sign +Ace of Base" ;
-        
+    if (uInput === "") {
+        uInput = "The Sign +Ace of Base";
+
     }
     console.log("line 56 after if:", uInput);
     spotify.search({
@@ -66,38 +82,38 @@ function spotifyThis(uInput) {
     }, function (error, response) {
         if (error) {
             console.log('Error occurred: ' + error);
-        }else{
+        } else {
             // console.log(data);
             console.log("Artist(s): " + response.tracks.items[0].artists[0].name);
             console.log("Song:" + response.tracks.items[0].name);
             console.log("URL:" + response.tracks.items[0].external_urls.spotify);
             console.log("Album:" + response.tracks.items[0].album.name);
-            
+
         }
-        
+
     });
-    
+
 }
-    
 
 
-        function switchCase(op, ui) {
-            switch (op) {
-                case "concert-this":
-                    concertThis(ui);
-                    break;
-                case "movie-this":
-                    movieThis(ui);
-                    break;
-                case "spotify-this-song":
-                        spotifyThis(ui);
-                    break
-                case "do-what-it-says":
-                    doIt(ui);
-                    break
-            };
+
+function switchCase(op, ui) {
+    switch (op) {
+        case "concert-this":
+            concertThis(ui);
+            break;
+        case "movie-this":
+            movieThis(ui);
+            break;
+        case "spotify-this-song":
+            spotifyThis(ui);
+            break
+        case "do-what-it-says":
+            doIt(ui);
+            break
+    };
 
 
-        };
+};
 
-        switchCase(command, search)
+switchCase(command, search)

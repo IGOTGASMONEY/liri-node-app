@@ -8,21 +8,35 @@ var APIClinet = require('omdb-api-client');
 
 // instantiate
 var omdb = new APIClinet();
+var fs = require("fs");
+var moment = require('moment');
+
 
 
 var command = process.argv[2];
 var search = process.argv.slice(3).join("+");
 
-console.log(process.argv[3])
-console.log(search)
-console.log(command)
+// console.log(process.argv[3])
+// console.log(search)
+// console.log(command)
+
+
+// * Name of the venue
+
+// * Venue location
+
+// * Date of the Event (use moment to format this as "MM/DD/YYYY")
+
+
+
 
 function concertThis(uInput) {
     axios.get("https://rest.bandsintown.com/artists/" + uInput + "/events?app_id=codingbootcamp").then(
         function (response) {
             // Then we print out the artist information
-            console.log(response.data[0]);
-
+            console.log(response.data[0].venue.name); // console log out labels and seperaters ex time location venue moment.js
+            console.log(response.data[0].venue.city);
+            console.log(moment(response.data[0].datetime).format("MM-DD-YYYY"));
         }
 
     );
@@ -31,28 +45,55 @@ function concertThis(uInput) {
 
 function movieThis(uInput) {
 
-    axios.get("http://www.omdbapi.com/?apikey=d5f8b492&t=" +uInput).then(function (response) {
-    console.log(response.data.Title);
-    console.log(response.data.Year);
-    console.log(response.data.imdbRating);
-    console.log(response.data.imdbVotes);
-    console.log(response.data.Ratings)
-    console.log(response.data.Country);
-    console.log(response.data.Language);
-    console.log(response.data.Plot);
+    if (uInput === '') {
+        uInput = "Mr.Nobody"
+    }
 
-    // * Title of the movie.
-    // * Year the movie came out.
-    // * IMDB Rating of the movie.
-    // * Rotten Tomatoes Rating of the movie.
-    // * Country where the movie was produced.
-    // * Language of the movie.
-    // * Plot of the movie.
-    // * Actors in the movie.
+    axios.get("http://www.omdbapi.com/?apikey=d5f8b492&t=" + uInput).then(function (response) {
+        console.log(response.data.Title);
+        console.log(response.data.Year);
+        console.log(response.data.imdbRating); // label  and add read me format 
+        console.log(response.data.imdbVotes);
+        console.log(response.data.Ratings[1].Value)
+        console.log(response.data.Country);
+        console.log(response.data.Language);
+        console.log(response.data.Plot);
+
+        // * Title of the movie.
+        // * Year the movie came out.
+        // * IMDB Rating of the movie.
+        // * Rotten Tomatoes Rating of the movie.
+        // * Country where the movie was produced.
+        // * Language of the movie.
+        // * Plot of the movie.
+        // * Actors in the movie.
     })
 
 
 }
+
+function doIt() {
+
+
+
+    song = fs.readFile('random.txt', "UTF8", function (error, data) {
+        uInput = data;
+
+        if (error) {
+            console.log(error);
+        } else {
+
+            spotifyThis(data);
+
+
+            // console.log(spotifyThis)
+        }
+
+
+
+    });
+}
+
 
 
 
@@ -70,18 +111,18 @@ function movieThis(uInput) {
 
 
 function spotifyThis(uInput) {
-    console.log("line 51 before if:", uInput);
+    // console.log("line 51 before if:", uInput);
     if (uInput === "") {
         uInput = "The Sign +Ace of Base";
 
     }
-    console.log("line 56 after if:", uInput);
+    // console.log("line 56 after if:", uInput);
     spotify.search({
         type: 'track',
         query: uInput
     }, function (error, response) {
         if (error) {
-            console.log('Error occurred: ' + error);
+            // console.log('Error occurred: ' + error);
         } else {
             // console.log(data);
             console.log("Artist(s): " + response.tracks.items[0].artists[0].name);

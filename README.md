@@ -75,7 +75,7 @@ require("dotenv").config();
 
    * `do-what-it-says`
 
-   ![LIRI GIF](images/demo.mp4)
+   ![LIRI GIF](images/demo.gif)
 
 ### What Each Command Should Do
 

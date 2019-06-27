@@ -11,6 +11,6 @@ LIRI-Bot. LIRI is a Language Interpretation and Recognition Interface. LIRI will
    * `do-what-it-says`
    ![Do What](images/demo3.gif)
    
-LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and Recognition Interface, LIRI is a Language Interpretation and Recognition Interface. LIRI will be a command line node app that takes in parameters and gives you back data.
+LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and Recognition Interface, LIRI is a Language Interpretation and Recognition Interface. LIRI will be a command line node app that takes in parameters and gives you back data.Take a look 
 
 

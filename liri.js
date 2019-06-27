@@ -34,9 +34,9 @@ function concertThis(uInput) {
     axios.get("https://rest.bandsintown.com/artists/" + uInput + "/events?app_id=codingbootcamp").then(
         function (response) {
             // Then we print out the artist information
-            console.log(response.data[0].venue.name); // console log out labels and seperaters ex time location venue moment.js
-            console.log(response.data[0].venue.city);
-            console.log(moment(response.data[0].datetime).format("MM-DD-YYYY"));
+            console.log("Venue: " + response.data[0].venue.name); // console log out labels and seperaters ex time location venue moment.js
+            console.log("Location:" + response.data[0].venue.city);
+            console.log("Date:" + moment(response.data[0].datetime).format("MM-DD-YYYY"));
         }
 
     );
@@ -50,14 +50,14 @@ function movieThis(uInput) {
     }
 
     axios.get("http://www.omdbapi.com/?apikey=d5f8b492&t=" + uInput).then(function (response) {
-        console.log(response.data.Title);
-        console.log(response.data.Year);
-        console.log(response.data.imdbRating); // label  and add read me format 
-        console.log(response.data.imdbVotes);
-        console.log(response.data.Ratings[1].Value)
-        console.log(response.data.Country);
-        console.log(response.data.Language);
-        console.log(response.data.Plot);
+        console.log("Title:" + response.data.Title);
+        console.log("Year:" + response.data.Year);
+        console.log("IMDB Rating:" + response.data.imdbRating); // label  and add read me format 
+        console.log("IMDB Votes:" + response.data.imdbVotes);
+        console.log("Rotten Tomatoes:" + response.data.Ratings[1].Value)
+        console.log("Country:" + response.data.Country);
+        console.log("Language:" + response.data.Language);
+        console.log("Plot:" + response.data.Plot);
 
         // * Title of the movie.
         // * Year the movie came out.

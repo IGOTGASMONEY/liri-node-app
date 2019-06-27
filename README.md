@@ -68,14 +68,16 @@ require("dotenv").config();
 9. Make it so liri.js can take in one of the following commands:
 
    * `concert-this`
+   ![LIRI GIF](images/demo.gif)
 
    * `spotify-this-song`
-
+    ![SPOTIFY](images/demo2.gif)
    * `movie-this`
+   ![MOVIE](images/demo4.gif)
 
    * `do-what-it-says`
+   ![Do What](images/demo3.gif)
 
-   ![LIRI GIF](images/demo.gif)
 
 ### What Each Command Should Do
 
